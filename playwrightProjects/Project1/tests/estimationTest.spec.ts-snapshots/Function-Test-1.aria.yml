@@ -1,0 +1,16 @@
+- dialog "Select":
+  - button "1 機器":
+    - paragraph: "1"
+    - paragraph: 機器
+  - button "2 衛生器具":
+    - paragraph: "2"
+    - paragraph: 衛生器具
+  - button "3 配管":
+    - paragraph: "3"
+    - paragraph: 配管
+  - button "4 ダクト":
+    - paragraph: "4"
+    - paragraph: ダクト
+  - button "5 定形":
+    - paragraph: "5"
+    - paragraph: 定形
