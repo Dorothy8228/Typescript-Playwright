@@ -1,4 +1,14 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
+import { LoginPage } from './pages/LoginPage';
+import { OrganizationPage } from './pages/OrganizationPage';
+import { ConstructionsPage } from './pages/ConstructionsPage';
+import { EstimatePage } from './pages/EstimatePage';
+
+// Test credentials
+const TEST_EMAIL = 'thuy.do@h2corporation.jp';
+const TEST_PASSWORD = '@DoryDo8228#';
+const CONSTRUCTION_NAME = 'Dory_Test';
+const ESTIMATE_NAME = 'MLIT-(0)';
 
 test('Function Test', async ({ browser }) => {
   const context = await browser.newContext({
