@@ -1,9 +1,20 @@
 import { BasePage } from './BasePage';
+import { expect } from '@playwright/test';
 
+
+const btn1 = 'Add new';
+const btn1a = 'New category';
+const btn1b = 'New under this category';
+const btn1c = 'Select or enter category name';
+const text1 = 'New Construction 1';
+const btn1d = `+ Create "${text1}"`;
+const btnConfirm = 'Confirm';
+const btnEnter = 'Enter';
+const btn2 = 'Add equipment';
+const btn3 = 'Select';
 /**
  * Estimate Page Object
- * Handles estimate and equipment-related interactions
- */
+*/
 export class EstimatePage extends BasePage {
   /**
    * Open an estimate by name
@@ -12,19 +23,53 @@ export class EstimatePage extends BasePage {
     const selector = `tr:has-text("${estimateName}") button:has-text("Open")`;
     await this.page.locator(selector).click();
   }
-
-  /**
-   * Click "Add equipment" button
-   */
-  async clickAddEquipment() {
-    await this.clickButtonByName('Add equipment');
+  /** 
+  * Handles construction-related interactions
+  */
+  async addNewConstruction() {
+    await this.clickButtonByName(btn1);
+    await this.clickMenuItemByName(btn1a);
+    await this.fillTextboxByRole(btn1c, text1);
+    await this.clickOptionByName(btn1d);
+    await this.clickButtonByName(btnConfirm);
+    await this.page.keyboard.press(btnEnter);
   }
 
   /**
+   * Take snapshot of the table
+   */
+  async takeTableSnapshot(fileName: string) {
+    await this.page.waitForTimeout(1000); // Wait for UI to stabilize and animations to finish
+    try {
+      const table = this.page.getByRole('table').first();
+      await table.screenshot({ path: fileName, timeout: 3000 });
+    } catch {
+      // Fallback to taking a screenshot of the entire page
+      await this.page.screenshot({ path: fileName, fullPage: true });
+    }
+  }
+
+  /**
+   * Verify newly created construction is displayed in the table
+   */
+  async verifyConstructionInTable() {
+    await expect(this.page.getByRole('row', { name: text1 }).first()).toBeVisible();
+  }
+
+  /**
+   * Handles estimate and equipment-related interactions
+   * Equipment List **
+   * Click "Add equipment" button
+   */
+  async clickAddEquipment() {
+    await this.clickButtonByName(btn2);
+  }
+
+  /** 
    * Click initial "Select" button to open equipment selection dialog
    */
   async clickSelect() {
-    await this.clickButtonByName('Select');
+    await this.clickButtonByName(btn3);
   }
 
   /**

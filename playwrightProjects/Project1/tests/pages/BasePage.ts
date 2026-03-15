@@ -25,6 +25,26 @@ export class BasePage {
   }
 
   /**
+   * Click a menu item by its role and name
+   */
+  async clickMenuItemByName(name: string) {
+    await this.page.getByRole('menuitem', { name }).click();
+  }
+  /**
+   * Click an option by its role and name
+   */
+  async clickOptionByName(name: string) {
+    await this.page.getByRole('option', { name }).click();
+  }
+
+   /**
+   * Click a button by its label
+   */
+  async clickButtonByLabel(label: string) {
+    await this.page.getByLabel(label).click();
+  }
+
+  /**
    * Click a tab by its role and name
    */
   async clickTabByName(name: string) {
@@ -38,6 +58,12 @@ export class BasePage {
     await this.page.getByText(name).fill(value);
   }
 
+  /**
+   * Fill a textbox by its role and name
+   */
+  async fillTextboxByRole(name: string, value: string) {
+    await this.page.getByRole('textbox', { name }).fill(value);
+  }
   /**
    * Wait for a specific timeout
    */
