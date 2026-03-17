@@ -147,6 +147,7 @@ export class EstimatePage extends BasePage {
     material?: string;
     environment?: string;
     suppliedGoods?: string;
+    insulation?: boolean;
   }) {
     let index = 3;
 
@@ -170,5 +171,46 @@ export class EstimatePage extends BasePage {
       await this.page.getByRole('textbox', { name: 'Select' }).nth(6).click();
       await this.page.getByRole('option', { name: specs.suppliedGoods }).click();
     }
+
+    if (specs.insulation) {
+      await this.page.getByRole('checkbox', { name: '保温' }).check();
+    }
+  }
+
+  /**
+   * Click nth row by text
+   */
+  async clickRowByText(text: string, index: number) {
+    await this.page.getByRole('row').filter({ hasText: text }).nth(index).click();
+  }
+
+  /**
+   * Click Add Estimate Table button
+   */
+  async clickAddEstimateTable() {
+    await this.page.getByRole('button', { name: '見積表を追加' }).click();
+  }
+
+  /**
+   * Select supply classification option in a row's combobox
+   */
+  async selectSupplyClassification(rowText: string, rowIndex: number, optionName: string) {
+    const row = this.page.getByRole('row').filter({ hasText: rowText }).nth(rowIndex);
+    await row.getByRole('combobox').nth(2).click();
+    await this.page.getByRole('option', { name: optionName }).click();
+  }
+
+  /**
+   * Click Add Detail Item button
+   */
+  async clickAddDetailItem() {
+    await this.page.getByRole('button', { name: '明細項目を追加' }).click();
+  }
+
+  /**
+   * Click Confirm button
+   */
+  async clickConfirmButton() {
+    await this.page.getByRole('button', { name: '確認' }).click();
   }
 }
